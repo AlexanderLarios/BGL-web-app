@@ -65,7 +65,7 @@
 
             $('#btnLogin').click(function () {
                 $.ajax({
-                    // Post username, password /token
+                    // Get username, password /token
                     url: 'https://www.PredictBGL.com/api/1.0/login.json?',
                     method: 'GET',
                     ContentType: 'multipart/form-data',
@@ -79,6 +79,7 @@
                         if (response.result == true) {
                             sessionStorage.setItem("Token", response.token);
                             window.location = '@Url.Action("AddLog","PredictBGL")';
+                            // Test to see if token is correct
                             alert('Token = ' + sessionStorage.getItem("Token"));
                         }
                         else
