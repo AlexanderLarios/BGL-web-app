@@ -79,6 +79,7 @@
                         if (response.result == true) {
                             sessionStorage.setItem("Token", response.token);
                             window.location = '@Url.Action("AddLog","PredictBGL")';
+                            alert('Token = ' + sessionStorage.getItem("Token"));
                         }
                         else
                             alert(response.message);
