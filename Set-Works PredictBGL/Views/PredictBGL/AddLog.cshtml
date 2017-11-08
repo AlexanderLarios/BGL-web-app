@@ -1,20 +1,16 @@
 ﻿@{
-    ViewBag.Title = "AddLog";
+    ViewBag.Title = "Add Log";
 }
 
-<h2><a name="add_log"></a>Add Log</h2>
+<h2>@ViewBag.Title.<a name="add_log"></a>Add Log</h2>
 <div>
-    <form method="POST" action="#add_log">
-        <table border="0">
+<section id="addLogForm">
+    <table border="0">
             <tbody>
-                <tr>
-                    <td>Token:</td>
-                    <td><input type="text" name="token" size="20" value="" placeholder="token"> (required) </td>
-                </tr>
                 <tr>
                     <td>Log type:</td>
                     <td>
-                        <select name="log_type">
+                        <select id="log_type">
                             <option value="1">LOG_BGL - 1</option>
                             <option value="2">LOG_INSULIN - 2</option>
                             <option value="3">LOG_CARBS - 3</option>
@@ -70,21 +66,21 @@
                 <tr>
                     <td>Time:</td>
                     <td>
-                        <input type="text" name="time" size="20" value="" placeholder="Y-m-d H:i:s">
+                        <input type="text" id="time" size="20" value="" placeholder="Y-m-d H:i:s">
                         (optional, if blank, uses 'now') Remember - this is UTC/GMT.)
                     </td>
                 </tr>
                 <tr>
                     <td>Value:</td>
                     <td>
-                        <input type="text" name="value" size="20" value="" placeholder="value">
+                        <input type="text" id="value" size="20" value="" placeholder="value">
                        
                     </td>
                 </tr>
                 <tr>
                     <td>Other:</td>
                     <td>
-                        <input type="text" name="other" size="20" value="" placeholder="other">
+                        <input type="text" id="other" size="20" value="" placeholder="other">
                         (If applicable Enter Insulin Type # or Gl Type # from charts below)
                        
                     </td>
@@ -92,14 +88,16 @@
                 <tr>
                     <td>Notes:</td>
                     <td>
-                        <input type="text" name="notes" size="20" value="" placeholder="notes">
+                        <input type="text" id="notes" size="20" value="" placeholder="notes">
                         (optional)
                     </td>
                 </tr>
             </tbody>
         </table>
-        <p><input type="submit" value="Add Log" name="add_log" class="btn btn-sm btn-primary"></p>
-    </form>
+}
+        <p><input id ="submit" class="btn btn-success" type="button" value="Add Log"></p>
+    </section>
+</div>
     <dd># Type of insulin</dd>
         <table border="1" style="float:left;" >
             <tbody>
@@ -209,6 +207,46 @@
             </tr>
         </tbody>
     </table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-    
-</div>
+            $('#linkClose').click(function () {
+                $('#divError').hide('fade');
+            });
+
+            $('#submit').click(function () {
+                $.ajax({
+                    // Post token, log_type, time, value, notes
+                    url: 'https://www.PredictBGL.com/api/1.0/add.json?',
+                    method: 'POST',
+                    ContentType: 'multipart/form-data',
+                    dataType: 'JSON',
+                    data: {
+                        token: sessionStorage.getItem("Token"),
+                        log_type: $('#log_type').val(),
+                        time: $('#time').val(),
+                        value: $('#value').val(),
+                        notes: $('#notes').val(),
+                    },
+                    //need correct success verification
+                    success: function (response) {
+                        if (response.result == true) {
+                            alert('Log Successfully Added')
+                            window.location = '@Url.Action("AddLog", "PredictBGL")';
+                        }
+                        else
+                            alert(response.message);
+                    },
+                    // Display errors if any in the Bootstrap alert <div>
+                    error: function (jqXHR) {
+                        $('#divErrorText').text(jqXHR.responseText);
+                        $('#divError').show('fade');
+                    }
+                });
+            });
+        });
+    </script>
+}
