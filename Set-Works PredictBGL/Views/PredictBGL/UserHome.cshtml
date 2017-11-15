@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "User DashBoard";
+}
+<div class="jumbotron">
+    <h1> .NET Web Application Project</h1>
+    <p class="lead">
+        Welcome to the Dashboard!
+ 
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Add A Log!</h2>
+        @Html.ActionLink("Add Log", "AddLog", "PredictBGL", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+    </div>
+    <div class="col-md-4">
+        <h2>View Logs!</h2>
+        @Html.ActionLink("View Logs", "ShowLog", "PredictBGL", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+    </div>
+    <div class="col-md-4">
+        <h2>Alexander</h2>
+        <p>I am a Senior CS student at UMKC looking to gain experience and become a complete full stack developer</p>
+        <p><a class="btn btn-default" href="https://www.linkedin.com/in/alexander-larios">LinkedIn &raquo;</a></p>
+    </div>
+</div>

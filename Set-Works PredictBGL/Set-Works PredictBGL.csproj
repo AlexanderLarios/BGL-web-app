@@ -272,6 +272,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\PredictBGL\AddLog.cshtml" />
+    <Content Include="Views\PredictBGL\ShowLog.cshtml" />
+    <Content Include="Views\PredictBGL\UserHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

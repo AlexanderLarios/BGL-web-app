@@ -235,7 +235,7 @@
                     success: function (response) {
                         if (response.result == true) {
                             alert('Log Successfully Added')
-                            window.location = '@Url.Action("AddLog", "PredictBGL")';
+                            window.location = '@Url.Action("UserHome", "PredictBGL")';
                         }
                         else
                             alert(response.message);

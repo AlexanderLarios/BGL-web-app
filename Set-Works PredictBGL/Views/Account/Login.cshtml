@@ -77,9 +77,8 @@
                     success: function (response) {
                         if (response.result == true) {
                             sessionStorage.setItem("Token", response.token);
-                            window.location = '@Url.Action("AddLog","PredictBGL")';
-                            // Test to see if token is correct
-                            alert('Token = ' + sessionStorage.getItem("Token"));
+                            window.location = '@Url.Action("UserHome","PredictBGL")';
+                           
                         }
                         else
                             alert(response.message);

@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "ShowLog";
+}
+
+<h2>Logs</h2>
+
+<tr>
+    <td>Search Start Date:</td>
+    <td>
+        <input type="text" id="startTime" size="20" value="" placeholder="yyyy-mm-dd hh:mm:ss"> 
+    </td>
+</tr>
+<tr>
+    <td>Search End Date:</td>
+    <td>
+        <input type="text" id="endTime" size="20" value="" placeholder="yyyy-mm-dd hh:mm:ss">
+        (Remember - this is UTC/GMT.)
+    </td>
+</tr>
+
+ <p><input id ="submit" class="btn btn-success" type="button" value="Get Logs"></p>
+
+<table id="records_table" border='1'>
+    <tr>
+        <th align="center" width="50">log_id</th>
+        <th align="center" width="100">user_id</th>
+        <th align="center" width="100">logtype_id</th>
+        <th align="center" width="100">other</th>
+        <th align="center" width="150">time</th>
+        <th align="center" width="100">value</th>
+        <th align="center" width="300">notes</th>
+    </tr>
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*var d = new Date,
+               dformat = [(d.geUTCtMonth() + 1).padLeft(),
+                          d.getUTCDate().padLeft(),
+                          d.getUTCFullYear()].join('-') + ' ' +
+                         [d.getUTCHours().padLeft(),
+                          d.getUTCMinutes().padLeft(),
+                          d.getUTCSeconds().padLeft()].join(':');
+            */
+            $('#submit').click(function () {
+                $.ajax({
+                    
+                        url: 'https://www.PredictBGL.com/api/1.0/extract?',
+                        method: 'Get',
+                        ContentType: 'multipart/form-data',
+                        dataType: 'JSON',
+                        data: {
+                            token: sessionStorage.getItem("Token"),
+                            start_date: $('#startTime').val(),
+                            end_date: $('#endTime').val(),
+                        },
+                        success: function (response) {
+                            if (response.result == true) {
+                                {
+                                    console.log(response);
+                                    var trHTML = '';
+                                    var data = response.logs;
+                                    for (var i = 0; i < data.length; i++) {
+                                        trHTML +=
+                                        '<tr><td>' + data[i].log_id +
+                                        '</td><td>' + data[i].user_id +
+                                        '</td><td>' + data[i].logtype_id +
+                                        '</td><td>' + data[i].other +
+                                        '</td><td>' + data[i].time +
+                                        '</td><td>' + data[i].value +
+                                        '</td><td>' + data[i].notes +
+                                        '</td></tr>';
+                                    };
+                                    $('#records_table').append(trHTML);
+                                }
+                            }
+                            else
+                                alert(response.message);
+                        },
+                        // Display errors if any in the Bootstrap alert <div>
+                        error: function (jqXHR) {
+                            $('#divErrorText').text(jqXHR.responseText);
+                            $('#divError').show('fade');
+                        }
+                 });
+            });
+        });
+</script>
+}
