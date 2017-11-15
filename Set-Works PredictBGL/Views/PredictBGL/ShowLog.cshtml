@@ -64,7 +64,7 @@
                                     console.log(response);
                                     var trHTML = '';
                                     var data = response.logs;
-                                    for (var i = 0; i < data.length; i++) {
+                                    for (var i = 0; i < response.rows; i++) {
                                         trHTML +=
                                         '<tr><td>' + data[i].log_id +
                                         '</td><td>' + data[i].user_id +
