@@ -8,14 +8,14 @@
 <tr>
     <td>Search Start Date:</td>
     <td>
-        <input type="text" id="startTime" size="20" value="" placeholder="yyyy-mm-dd hh:mm:ss"> 
+        <input type="text" id="startTime" size="20" value="" placeholder="yyyy-mm-dd"> 
     </td>
 </tr>
 <tr>
     <td>Search End Date:</td>
     <td>
-        <input type="text" id="endTime" size="20" value="" placeholder="yyyy-mm-dd hh:mm:ss">
-        (Remember - this is UTC/GMT.)
+        <input type="text" id="endTime" size="20" value="" placeholder="yyyy-mm-dd">
+        
     </td>
 </tr>
 
@@ -55,8 +55,8 @@
                         dataType: 'JSON',
                         data: {
                             token: sessionStorage.getItem("Token"),
-                            start_date: $('#startTime').val(),
-                            end_date: $('#endTime').val(),
+                            start_date: $('#startTime').val()+" 00:00:00",
+                            end_date: $('#endTime').val()+" 23:59:59",
                         },
                         success: function (response) {
                             if (response.result == true) {
@@ -64,7 +64,8 @@
                                     console.log(response);
                                     var trHTML = '';
                                     var data = response.logs;
-                                    for (var i = 0; i < response.rows; i++) {
+                                    var rows = response.rows;
+                                    for (var i = 0; i < rows; i++) {
                                         trHTML +=
                                         '<tr><td>' + data[i].log_id +
                                         '</td><td>' + data[i].user_id +
@@ -74,8 +75,9 @@
                                         '</td><td>' + data[i].value +
                                         '</td><td>' + data[i].notes +
                                         '</td></tr>';
+                                        $('#records_table').append(trHTML);
                                     };
-                                    $('#records_table').append(trHTML);
+                                    
                                 }
                             }
                             else
