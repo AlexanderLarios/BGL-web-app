@@ -13,5 +13,15 @@ namespace Set_Works_PredictBGL.Controllers
             return View();
         }
 
+        public ActionResult ShowLog()
+        {
+            return View();
+        }
+
+        public ActionResult UserHome()
+        {
+            return View();
+        }
+
     }
 }
