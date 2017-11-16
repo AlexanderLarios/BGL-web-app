@@ -64,7 +64,8 @@
                                     console.log(response);
                                     var trHTML = '';
                                     var data = response.logs;
-                                    var rows = response.rows;
+                                    var rows = response.logs.length;
+                                    alert(rows);
                                     for (var i = 0; i < rows; i++) {
                                         trHTML +=
                                         '<tr><td>' + data[i].log_id +
@@ -75,9 +76,9 @@
                                         '</td><td>' + data[i].value +
                                         '</td><td>' + data[i].notes +
                                         '</td></tr>';
-                                        $('#records_table').append(trHTML);
+
                                     };
-                                    
+                                    $('#records_table').append(trHTML);
                                 }
                             }
                             else
